@@ -1,4 +1,4 @@
-#### NPM Package Template
-A template for writing NPM packages.
+#### Immaculter-JS
+Immaculater Protocol Buffer Node.js Module
 
 [Read the Documentation](http://cleverbeagle.com/packages/template)

@@ -1,7 +1,7 @@
 {
-  "name": "npm-package-template",
-  "version": "1.2.0",
-  "description": "A template for writing NPM packages.",
+  "name": "immaculater-js",
+  "version": "1.0.0",
+  "description": "Immaculater Protocol Buffer Node.js Module",
   "main": "index.js",
   "scripts": {
     "build": "babel --presets env src -d ./ --ignore src/index.test.js",
@@ -10,24 +10,31 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cleverbeagle/npm-package-template"
+    "url": "git+https://github.com/lisagorewitdecker/immaculater-js"
   },
   "keywords": [
     "npm",
     "package",
     "template"
   ],
-  "author": "cleverbeagle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cleverbeagle/npm-package-template/issues"
+  "author": {
+    "name": "Lisa Gorewit-Decker",
+    "email": "lisagorewitdecker@gmail.com",
+    "url": "http://lisagorewitdecker.com/"
   },
-  "homepage": "http://cleverbeagle.com/packages/template",
+  "contributors": [
+    "David L. Chandler <immaculaterhelp@gmail.com> (https://github.com/chandler37)"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lisagorewitdecker/immaculater-js/issues"
+  },
+  "homepage": "https://github.com/lisagorewitdecker/immaculater-js",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-env": "^1.6.0",
-    "jest": "^20.0.3"
+    "babel-preset-env": "^1.7.0",
+    "jest": "^20.0.4"
   }
 }
