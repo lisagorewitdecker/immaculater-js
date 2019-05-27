@@ -1,10 +1,12 @@
-test('it puts the lotion in the basket', () => {
-    const basket = ['lotion'];
-    expect(basket.indexOf('lotion')).toBe(0);
-  });
-  
-  test('it throws an error', () => {
-    expect(() => {
-      throw new Error('Something went wrong.');
-    }).toThrow();
-  });
+test(`TODO(lgd): test deserialization, \
+      serialization, and CRUD operations for \
+      folders, project, actions, context, notes`, () => {
+  const haystack = ["needle"];
+  expect(haystack.indexOf("needle")).toBe(0);
+});
+
+test("TODO(lgd): this is just an example", () => {
+  expect(() => {
+    throw new Error("Something went wrong.");
+  }).toThrow();
+});
