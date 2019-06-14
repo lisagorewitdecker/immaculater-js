@@ -17,10 +17,10 @@ by the [Django backend](https://github.com/chandler37/immaculater).
 	cd immaculater-js
     ```
 
-2. **If you are coming back to a clone you've used before, remove nodeenv virtual environment, yarn and npm installation directories**
+2. **If you are coming back to a clone you've used before, remove nodeenv virtual environment and npm installation directories**
 
     ```sh
-    # nodeenv and yarn install here:
+    # nodeenv installs here:
     rm -fr node_modules venv
     ```
 
@@ -29,7 +29,7 @@ by the [Django backend](https://github.com/chandler37/immaculater).
 If you choose to use `nodeenv` below, you'll need Homebrew to provide a modern
 Python interpreter.
 
-Even if you don't, Homebrew is the best way to install Node.js, NPM, Yarn, etc.
+Even if you don't, Homebrew is the best way to install Node.js, NPM, etc.
 
 See [installation instructions](https://docs.brew.sh/Installation). If it's
 already installed, consider `brew update; brew upgrade` to get the latest and
@@ -83,32 +83,23 @@ If not, use
 See [this article](https://medium.com/@katopz/how-to-install-specific-nodejs-version-c6e1cec8aa11)
 if you have trouble with versions.
 
-6.  **Install yarn.** DLC?
-
-yarn 1.15.2 is known to work as installed in a nodeenv with
-
-    ```sh
-    # install yarn (you already activated nodeenv if you chose that option)
-    npm install -g yarn
-	```
-
-At this point the 'globally installed' yarn is actually in `./venv/bin/yarn` as
-`which yarn` should show.
-
-7.  **Install dependencies.**
+6.  **Install dependencies.**
 
 Navigate into the `immaculater-js/` directory and install dependencies.
 
     ```sh
-    # install dependencies using yarn
-    yarn install
+    # install dependencies using npm
+    make install
     ```
 
-8.  **Start editing!**
+7.  **Start editing!**
 
     ```sh
-    DLC run tests
+    make test
     ```
+
+The above command will watch files for changes. So change the files.
+
 
 ## Source Code and How to Commit
 
@@ -118,4 +109,8 @@ TODO(lgd): Need to add steps on how to create pull requests.
 ## Credits
 
 The first commit of this repository was based
-on [CleverBeagle's Npm-Package-Template](https://github.com/cleverbeagle/npm-package-template)
+on
+[CleverBeagle's Npm-Package-Template](https://github.com/cleverbeagle/npm-package-template)
+
+The `Makefile` and the first test case using the protocol buffer was courtesy
+[chandler37](https://github.com/chandler37)
