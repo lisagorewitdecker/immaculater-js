@@ -106,6 +106,12 @@ The above command will watch files for changes. So change the files.
 TODO(lgd): Need to add steps on how to create pull requests.
 
 
+## Django Backend and mergeprotobufs
+
+See https://github.com/chandler37/immaculater/pull/57 to learn about the
+`mergeprotobufs` API that this module uses to read and write the to-do list.
+
+
 ## Credits
 
 The first commit of this repository was based
