@@ -1,4 +1,40 @@
-import index from './index';
+import {
+    pb,
+    makeMergeToDoListRequestToReadLatestBecauseWeHaveNoToDoListYet,
+    makeMergeToDoListRequestToMergeOursWithTheirs,
+    callMergeProtoBufsApi,
+    sha1
+} from './index';
+
+function exampleAction(text) {
+    var a = new pb.Action([]);
+    var common = new pb.Common([]);
+    var ts = new pb.Timestamp([]);
+    ts.setCtime("37");
+    common.setTimestamp(ts);
+    var metadata = new pb.Metadata([]);
+    // test emoji support, four-byte unicode codepoints:
+    if (typeof text === "undefined") {
+	metadata.setName("cliches are so trite -- invent a new ❤❤❤ aphorism");
+    } else {
+	metadata.setName(text);
+    };
+    common.setMetadata(metadata);
+    a.setCommon(common);
+    return a;
+};
+
+function exampleInbox() {
+    var inbox = new pb.Project([]);
+    inbox.setActionsList([exampleAction()]);
+    return inbox;
+};
+
+function exampleToDoList() {
+    var tdl = new pb.ToDoList([]);
+    tdl.setInbox(exampleInbox());
+    return tdl;
+};
 
 const blankCompletedAction = {
     "common": {
@@ -15,21 +51,21 @@ const blankCompletedAction = {
 };
 
 test('Creating a new Action, writing it, reading it back', () => {
-    var a = new index.pb.Action([]);
+    var a = new pb.Action([]);
     a.setIsComplete(false);
-    var common = new index.pb.Common([]);
+    var common = new pb.Common([]);
     common.setIsDeleted(true);
-    var ts = new index.pb.Timestamp([]);
+    var ts = new pb.Timestamp([]);
     ts.setCtime("37");
     ts.setDtime("38");
     common.setTimestamp(ts);
     a.setCommon(common);
-    var metadata = new index.pb.Metadata([]);
+    var metadata = new pb.Metadata([]);
     common.setMetadata(metadata);
     metadata.setName("buy soymilk");
     metadata.setNote("unsweetened preferred");
-    var ctx = new index.pb.Context([]);
-    var ctxCommon = new index.pb.Common([]);
+    var ctx = new pb.Context([]);
+    var ctxCommon = new pb.Common([]);
     ctxCommon.setUid("-2485513351100272937");
     // NOTE: this is the only field in 'Action.ctx' that matters, the UID. Full
     // Contexts live in the ContextList:
@@ -38,7 +74,7 @@ test('Creating a new Action, writing it, reading it back', () => {
 
     var ser = a.serializeBinary();
     expect(ser.length).toEqual(65);
-    var aa = new index.pb.Action.deserializeBinary(ser);
+    var aa = new pb.Action.deserializeBinary(ser);
     const gold = {
 	"common": {
 	    "isDeleted": true,
@@ -60,17 +96,73 @@ test('Creating a new Action, writing it, reading it back', () => {
 });
 
 test('Creating a new Action that is complete except for a Timestamp but otherwise blank', () => {
-    var a = new index.pb.Action([]);
+    var a = new pb.Action([]);
     a.setIsComplete(true);
-    var common = new index.pb.Common([]);
+    var common = new pb.Common([]);
     a.setCommon(common);
-    var ctx = new index.pb.Context([]);
+    var ctx = new pb.Context([]);
     a.setCtx(ctx);
     expect(a.toObject()).toEqual(blankCompletedAction);
     var ser = a.serializeBinary();
     expect(ser.length).toEqual(6);
-    var aa = new index.pb.Action.deserializeBinary(ser);
+    var aa = new pb.Action.deserializeBinary(ser);
     expect(aa.toObject()).toEqual(blankCompletedAction);
+});
+
+test('makeMergeToDoListRequestToReadLatestBecauseWeHaveNoToDoListYet', () => {
+    var req = makeMergeToDoListRequestToReadLatestBecauseWeHaveNoToDoListYet();
+    expect(req).toBeInstanceOf(pb.MergeToDoListRequest);
+    const gold = {"latest": undefined, "newData": false, "previousSha1Checksum": undefined, "sanityCheck": "18369614221190020847"};
+    expect(req.toObject()).toEqual(gold);
+});
+
+test('makeMergeToDoListRequestToMergeOursWithTheirs', () => {
+    expect(() => {
+	makeMergeToDoListRequestToMergeOursWithTheirs("foo", undefined);
+    }).toThrow(TypeError);
+
+    expect(() => {
+	makeMergeToDoListRequestToMergeOursWithTheirs("foo", "bad sha1");
+    }).toThrow("bad previousSha1Checksum");
+
+    var req = makeMergeToDoListRequestToMergeOursWithTheirs(
+	exampleToDoList(),
+	"3737373737373737373737373737373737373737"  // DLC use the real sha1
+    );
+    expect(req).toBeInstanceOf(pb.MergeToDoListRequest);
+    const gold = {
+	"latest": {
+	    "payload": "CkMiQQo/EgIIJRo5CjdjbGljaGVzIGFyZSBzbyB0cml0ZSAtLSBpbnZlbnQgYSBuZXcg4p2k4p2k4p2kIGFwaG9yaXNt",
+	    "payloadIsZlibCompressed": false,
+	    "payloadLength": 69,
+	    "sha1Checksum": "e0bfad56e54b9972147b1a1e678a8341a9f40b18",
+	},
+	"newData": false,
+	"sanityCheck": "18369614221190020847",
+	"previousSha1Checksum": "3737373737373737373737373737373737373737"
+    };
+    expect(req.toObject()).toEqual(gold);
+});
+
+test('calling mergeprotobufs with nothing, getting something, adding to it, and calling it again', () => {
+    var firstReq = makeMergeToDoListRequestToReadLatestBecauseWeHaveNoToDoListYet();
+    var firstResponse = callMergeProtoBufsApi(firstReq);
+    expect(firstResponse).toBeInstanceOf(pb.MergeToDoListResponse);
+    const previousHash = firstResponse.sha1Checksum;
+    expect(previousHash).toEqual("DLC the hash");
+    expect(firstResponse.getToDoList().getInbox().getActionsList()[0].getCommon().getMetadata().name).toEqual("buy soymilk");
+
+    // Now add an action:
+    firstResponse.getToDoList().getInbox().getActionsList().push(exampleAction("new action"));
+
+    // DLC make a new MergeToDoListRequest that includes firstResponse.getToDoList()
+    var secondReq = "DLC TODO";
+
+    const sha1HashOfMutatedToDoList = sha1(firstResponse.getToDoList().serializeBinary());
+    var secondResponse = callMergeProtoBufsApi(secondReq);
+    // DLC expect that this response is the same as what we sent. it should not even have a
+    expect(secondResponse.hasToDoList()).toBeFalsy();
+    expect(secondResponse.previousSha1Checksum).toEqual(sha1HashOfMutatedToDoList);
 });
 
 test(`TODO(lgd): test deserialization, serialization, and CRUD operations for folders, project, actions, context, notes`, () => {
