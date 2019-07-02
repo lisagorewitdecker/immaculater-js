@@ -10,18 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lisagorewitdecker/immaculater-js"
+    "url": "git+https://github.com/lisagorewitdecker/immaculater-js.git"
   },
   "keywords": [
     "npm",
     "package",
     "template"
   ],
-  "author": {
-    "name": "Lisa Gorewit-Decker",
-    "email": "lisagorewitdecker@gmail.com",
-    "url": "http://lisagorewitdecker.com/"
-  },
+  "author": "Lisa Gorewit-Decker <lisagorewitdecker@gmail.com> (http://lisagorewitdecker.com/)",
   "contributors": [
     "David L. Chandler <immaculaterhelp@gmail.com> (https://github.com/chandler37)"
   ],
@@ -32,6 +28,8 @@
   "homepage": "https://github.com/lisagorewitdecker/immaculater-js",
   "dependencies": {
     "google-protobuf": "^3.8.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
     "sha1": "^1.1.1"
   },
   "devDependencies": {
