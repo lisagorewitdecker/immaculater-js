@@ -18,7 +18,7 @@ installnodeenv:
 	@echo "brew comes from Homebrew, https://brew.sh"
 	brew update
 	brew install make python node@10
-	sudo pip3 install nodeenv
+	pip3 install nodeenv
 
 .PHONY: install
 install: | venv/npm_installed.proof
