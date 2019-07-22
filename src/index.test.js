@@ -43,10 +43,6 @@ const blankCompletedAction = {
 	"timestamp": undefined,
 	"uid": undefined,
     },
-    "ctx": {
-	"common": undefined,
-	"isActive": undefined,
-    },
     "isComplete": true
 };
 
@@ -64,16 +60,10 @@ test('Creating a new Action, writing it, reading it back', () => {
     common.setMetadata(metadata);
     metadata.setName("buy soymilk");
     metadata.setNote("unsweetened preferred");
-    var ctx = new pb.Context([]);
-    var ctxCommon = new pb.Common([]);
-    ctxCommon.setUid("-2485513351100272937");
-    // NOTE: this is the only field in 'Action.ctx' that matters, the UID. Full
-    // Contexts live in the ContextList:
-    ctx.setCommon(ctxCommon);
-    a.setCtx(ctx);
+    a.setCtxUid("-2485513351100272937");
 
     var ser = a.serializeBinary();
-    expect(ser.length).toEqual(65);
+    expect(ser.length).toEqual(61);
     var aa = new pb.Action.deserializeBinary(ser);
     const gold = {
 	"common": {
@@ -84,12 +74,7 @@ test('Creating a new Action, writing it, reading it back', () => {
 		"ctime": "37", "dtime": "38", "mtime": undefined
 	    }, "uid": undefined
 	},
-	"ctx": {
-	    "common": {
-		"isDeleted": undefined, "metadata": undefined, "timestamp": undefined, "uid": "-2485513351100272937"
-	    },
-	    "isActive": undefined
-	},
+	"ctxUid": "-2485513351100272937",
 	"isComplete": false
     };
     expect(aa.toObject()).toEqual(gold);
@@ -100,11 +85,9 @@ test('Creating a new Action that is complete except for a Timestamp but otherwis
     a.setIsComplete(true);
     var common = new pb.Common([]);
     a.setCommon(common);
-    var ctx = new pb.Context([]);
-    a.setCtx(ctx);
     expect(a.toObject()).toEqual(blankCompletedAction);
     var ser = a.serializeBinary();
-    expect(ser.length).toEqual(6);
+    expect(ser.length).toEqual(4);
     var aa = new pb.Action.deserializeBinary(ser);
     expect(aa.toObject()).toEqual(blankCompletedAction);
 });

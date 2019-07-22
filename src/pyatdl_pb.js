@@ -355,7 +355,7 @@ proto.pyatdl.Context.extensionsBinary = {};
  * @constructor
  */
 proto.pyatdl.Action = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, 5, null, null);
+  jspb.Message.initialize(this, opt_data, 0, 6, null, null);
 };
 goog.inherits(proto.pyatdl.Action, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -2870,7 +2870,7 @@ proto.pyatdl.Action.toObject = function(includeInstance, msg) {
   var f, obj = {
     common: (f = msg.getCommon()) && proto.pyatdl.Common.toObject(includeInstance, f),
     isComplete: (f = jspb.Message.getBooleanField(msg, 3)) == null ? undefined : f,
-    ctx: (f = msg.getCtx()) && proto.pyatdl.Context.toObject(includeInstance, f)
+    ctxUid: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f
   };
 
   jspb.Message.toObjectExtension(/** @type {!jspb.Message} */ (msg), obj,
@@ -2919,10 +2919,9 @@ proto.pyatdl.Action.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsComplete(value);
       break;
-    case 4:
-      var value = new proto.pyatdl.Context;
-      reader.readMessage(value,proto.pyatdl.Context.deserializeBinaryFromReader);
-      msg.setCtx(value);
+    case 5:
+      var value = /** @type {string} */ (reader.readInt64String());
+      msg.setCtxUid(value);
       break;
     default:
       jspb.Message.readBinaryExtension(msg, reader,
@@ -2971,12 +2970,11 @@ proto.pyatdl.Action.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getCtx();
+  f = /** @type {string} */ (jspb.Message.getField(message, 5));
   if (f != null) {
-    writer.writeMessage(
-      4,
-      f,
-      proto.pyatdl.Context.serializeBinaryToWriter
+    writer.writeInt64String(
+      5,
+      f
     );
   }
   jspb.Message.serializeBinaryExtensions(message, writer,
@@ -3050,26 +3048,25 @@ proto.pyatdl.Action.prototype.hasIsComplete = function() {
 
 
 /**
- * optional Context ctx = 4;
- * @return {?proto.pyatdl.Context}
+ * optional int64 ctx_uid = 5;
+ * @return {string}
  */
-proto.pyatdl.Action.prototype.getCtx = function() {
-  return /** @type{?proto.pyatdl.Context} */ (
-    jspb.Message.getWrapperField(this, proto.pyatdl.Context, 4));
+proto.pyatdl.Action.prototype.getCtxUid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, "0"));
 };
 
 
-/** @param {?proto.pyatdl.Context|undefined} value */
-proto.pyatdl.Action.prototype.setCtx = function(value) {
-  jspb.Message.setWrapperField(this, 4, value);
+/** @param {string} value */
+proto.pyatdl.Action.prototype.setCtxUid = function(value) {
+  jspb.Message.setField(this, 5, value);
 };
 
 
 /**
- * Clears the message field making it undefined.
+ * Clears the field making it undefined.
  */
-proto.pyatdl.Action.prototype.clearCtx = function() {
-  this.setCtx(undefined);
+proto.pyatdl.Action.prototype.clearCtxUid = function() {
+  jspb.Message.setField(this, 5, undefined);
 };
 
 
@@ -3077,8 +3074,8 @@ proto.pyatdl.Action.prototype.clearCtx = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.pyatdl.Action.prototype.hasCtx = function() {
-  return jspb.Message.getField(this, 4) != null;
+proto.pyatdl.Action.prototype.hasCtxUid = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
