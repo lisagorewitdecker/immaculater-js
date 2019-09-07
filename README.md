@@ -21,7 +21,7 @@ by the [Django backend](https://github.com/chandler37/immaculater).
 
     ```sh
     # nodeenv installs here:
-    rm -fr node_modules venv
+    make clean
     ```
 
 3.  **Install [Homebrew](https://brew.sh/)**
@@ -64,7 +64,7 @@ on May 5 2019 during C++ compilation of the 'nan' package):
 
     ```sh
     # create virtual Node.js environment
-    nodeenv --node=10.15.3 venv
+    make venv
 	. venv/bin/activate
     # Notice how your prompt says (venv) now.
     ```
@@ -77,7 +77,7 @@ If not, use
 
     ```sh
     # install Node.js
-	brew update; brew install node@10
+	make installnodeenv
 	```
 
 See [this article](https://medium.com/@katopz/how-to-install-specific-nodejs-version-c6e1cec8aa11)
