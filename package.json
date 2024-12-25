@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/lisagorewitdecker/immaculater-js",
   "dependencies": {
-    "google-protobuf": "^3.8.0",
+    "google-protobuf": "^3.21.4",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.7",
     "sha1": "^1.1.1"
