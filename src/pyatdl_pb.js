@@ -9,7 +9,9 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = typeof globalThis !== 'undefined' ? globalThis :
+  typeof window !== 'undefined' ? window :
+  typeof self !== 'undefined' ? self : this;
 
 goog.exportSymbol('proto.pyatdl.Action', null, global);
 goog.exportSymbol('proto.pyatdl.ChecksumAndData', null, global);

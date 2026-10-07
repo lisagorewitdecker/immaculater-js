@@ -135,6 +135,10 @@ test("makeMergeToDoListRequestToMergeOursWithTheirs", () => {
     }).toThrow(TypeError);
 
     expect(() => {
+	makeMergeToDoListRequestToMergeOursWithTheirs("foo", null);
+    }).toThrow(TypeError);
+
+    expect(() => {
 	makeMergeToDoListRequestToMergeOursWithTheirs("foo", "bad sha1");
     }).toThrow("bad previousSha1Checksum");
 
@@ -415,7 +419,7 @@ DLC
 	    done();
 	},
 	function(description) {
-	    expect(description).toBe("DLC just raise an assertion failure; the error callback has been called but the success callback should be called");
+	    expect(description).toBe("Unable to call mergeprotobufs API");
 	    done();
 	}
     );

@@ -33,7 +33,10 @@ export function makeMergeToDoListRequestToMergeOursWithTheirs(
     ourTdl,
     previousSha1Checksum
 ) {
-    if (!previousSha1Checksum.match(/^[a-f0-9]{40}$/)) {
+    if (typeof previousSha1Checksum !== "string") {
+        throw new TypeError("bad previousSha1Checksum");
+    }
+    if (!/^[a-f0-9]{40}$/.test(previousSha1Checksum)) {
 	throw new Error("bad previousSha1Checksum");
     }
     var req = makeSaneMergeToDoListRequest();
@@ -58,17 +61,22 @@ export function callMergeProtoBufsApi(request, success, error) {
 	method: "POST",
 	pathname: "/todo/mergeprotobufs",
 	path: "/todo/mergeprotobufs",
-	auth: {
-	    username: "lisamergeprotobufstest3",
-	    password: "worldThree",
-	    sendImmediately: true
-	},
+	timeout: 30000,
 	body: request.serializeBinary(),
 	json: false,
 	headers: {
 	    "Content-Type": "application/x-protobuf"
 	}
     };
+    var username = process.env.IMMACULATER_API_USERNAME;
+    var password = process.env.IMMACULATER_API_PASSWORD;
+    if (username && password) {
+	options.auth = {
+	    username: username,
+	    password: password,
+	    sendImmediately: true
+	};
+    }
     rp(options)
 	.then(function(parsedBody) {
 	    var resp = new pb.MergeToDoListResponse.deserializeBinary(parsedBody);
@@ -78,9 +86,8 @@ export function callMergeProtoBufsApi(request, success, error) {
 	    }
 	    success(resp.getSha1Checksum(), resp.getToDoList());
 	})
-	.catch(function(err) {
-	    console.log("DLC here 000" + err);
-	    error("DLC error is " + err);
+	.catch(function() {
+	    error("Unable to call mergeprotobufs API");
 	});
 }
 

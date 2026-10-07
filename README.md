@@ -111,6 +111,11 @@ TODO(lgd): Need to add steps on how to create pull requests.
 See https://github.com/chandler37/immaculater/pull/57 to learn about the
 `mergeprotobufs` API that this module uses to read and write the to-do list.
 
+If the API requires HTTP Basic authentication, provide
+`IMMACULATER_API_USERNAME` and `IMMACULATER_API_PASSWORD` in the runtime
+environment. Do not embed these values in client-side code or ship them in a
+browser bundle.
+
 
 ## Credits
 
