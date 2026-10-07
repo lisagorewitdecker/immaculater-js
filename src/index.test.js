@@ -419,7 +419,7 @@ DLC
 	    done();
 	},
 	function(description) {
-	    expect(description).toBe("DLC just raise an assertion failure; the error callback has been called but the success callback should be called");
+	    expect(description).toBe("Unable to call mergeprotobufs API");
 	    done();
 	}
     );
