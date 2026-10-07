@@ -49,7 +49,7 @@ export function makeMergeToDoListRequestToMergeOursWithTheirs(
 }
 
 // DLC explain error handling... throws what?
-export function callMergeProtoBufsApi(request, success, error) {
+export function callMergeProtoBufsApi(request, success, error, auth) {
     if (!(request instanceof pb.MergeToDoListRequest)) {
 	throw new TypeError("bad type of request");
     }
@@ -58,17 +58,15 @@ export function callMergeProtoBufsApi(request, success, error) {
 	method: "POST",
 	pathname: "/todo/mergeprotobufs",
 	path: "/todo/mergeprotobufs",
-	auth: {
-	    username: "lisamergeprotobufstest3",
-	    password: "worldThree",
-	    sendImmediately: true
-	},
 	body: request.serializeBinary(),
 	json: false,
 	headers: {
 	    "Content-Type": "application/x-protobuf"
 	}
     };
+    if (auth) {
+	options.auth = auth;
+    }
     rp(options)
 	.then(function(parsedBody) {
 	    var resp = new pb.MergeToDoListResponse.deserializeBinary(parsedBody);

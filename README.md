@@ -111,6 +111,11 @@ TODO(lgd): Need to add steps on how to create pull requests.
 See https://github.com/chandler37/immaculater/pull/57 to learn about the
 `mergeprotobufs` API that this module uses to read and write the to-do list.
 
+`callMergeProtoBufsApi` accepts optional request-promise authentication as its
+fourth argument. This package does not include shared API credentials. Do not
+put reusable credentials in a client-side application; use user-scoped
+authentication or make authenticated requests from a trusted server.
+
 
 ## Credits
 
