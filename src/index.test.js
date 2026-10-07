@@ -135,6 +135,10 @@ test("makeMergeToDoListRequestToMergeOursWithTheirs", () => {
     }).toThrow(TypeError);
 
     expect(() => {
+	makeMergeToDoListRequestToMergeOursWithTheirs("foo", null);
+    }).toThrow(TypeError);
+
+    expect(() => {
 	makeMergeToDoListRequestToMergeOursWithTheirs("foo", "bad sha1");
     }).toThrow("bad previousSha1Checksum");
 
