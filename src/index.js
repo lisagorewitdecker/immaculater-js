@@ -86,7 +86,7 @@ export function callMergeProtoBufsApi(request, success, error) {
 	    }
 	    success(resp.getSha1Checksum(), resp.getToDoList());
 	})
-	.catch(function(err) {
+	.catch(function() {
 	    error("Unable to call mergeprotobufs API");
 	});
 }
