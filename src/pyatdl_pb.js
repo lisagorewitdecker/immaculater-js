@@ -9,6 +9,26 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
+var globalObject = typeof globalThis !== 'undefined' ? globalThis :
+  typeof global !== 'undefined' ? global :
+  typeof window !== 'undefined' ? window :
+  typeof self !== 'undefined' ? self : this;
+
+goog.exportSymbol('proto.pyatdl.Action', null, globalObject);
+goog.exportSymbol('proto.pyatdl.ChecksumAndData', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Common', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Context', null, globalObject);
+goog.exportSymbol('proto.pyatdl.ContextList', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Folder', null, globalObject);
+goog.exportSymbol('proto.pyatdl.MergeToDoListRequest', null, globalObject);
+goog.exportSymbol('proto.pyatdl.MergeToDoListResponse', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Metadata', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Note', null, globalObject);
+goog.exportSymbol('proto.pyatdl.NoteList', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Project', null, globalObject);
+goog.exportSymbol('proto.pyatdl.Timestamp', null, globalObject);
+goog.exportSymbol('proto.pyatdl.ToDoList', null, globalObject);
+goog.exportSymbol('proto.pyatdl.VisitorInfo0', null, globalObject);
 var global = typeof globalThis !== 'undefined' ? globalThis :
   typeof window !== 'undefined' ? window :
   typeof self !== 'undefined' ? self : this;

@@ -52,7 +52,7 @@ export function makeMergeToDoListRequestToMergeOursWithTheirs(
 }
 
 // DLC explain error handling... throws what?
-export function callMergeProtoBufsApi(request, success, error) {
+export function callMergeProtoBufsApi(request, success, error, auth) {
     if (!(request instanceof pb.MergeToDoListRequest)) {
 	throw new TypeError("bad type of request");
     }
@@ -68,6 +68,8 @@ export function callMergeProtoBufsApi(request, success, error) {
 	    "Content-Type": "application/x-protobuf"
 	}
     };
+    if (auth) {
+	options.auth = auth;
     var username = process.env.IMMACULATER_API_USERNAME;
     var password = process.env.IMMACULATER_API_PASSWORD;
     if (username && password) {
