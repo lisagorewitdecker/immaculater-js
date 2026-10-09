@@ -115,6 +115,10 @@ See https://github.com/chandler37/immaculater/pull/57 to learn about the
 fourth argument. This package does not include shared API credentials. Do not
 put reusable credentials in a client-side application; use user-scoped
 authentication or make authenticated requests from a trusted server.
+If the API requires HTTP Basic authentication, provide
+`IMMACULATER_API_USERNAME` and `IMMACULATER_API_PASSWORD` in the runtime
+environment. Do not embed these values in client-side code or ship them in a
+browser bundle.
 
 
 ## Credits
